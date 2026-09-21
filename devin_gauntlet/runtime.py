@@ -139,6 +139,10 @@ class Runtime:
             body += f"\nReturn one result as <GAUNTLET_RESULT:{nonce}>JSON_OBJECT</GAUNTLET_RESULT>.\n"
         else:
             body += "\nYour completion message is a report, never a quality verdict. Do not start background or cloud agents.\n"
+        if role != "critic":
+            body += ("\nENVIRONMENT NOTE: the `edit`/`write` file tools are unavailable in this "
+                     "non-interactive sandboxed mode — calls to them are rejected. Create and modify "
+                     "ALL files via the exec/shell tool (heredocs, python -c, cp, tee, etc.).\n")
         atomic(inputs / "prompt.md", body, text=True)
         argv = list(self.config.get("agent_command", ["devin"]))
         argv += ["--print", "--prompt-file", str(inputs / "prompt.md"),
@@ -153,7 +157,21 @@ class Runtime:
         model = self.config.get("models", {}).get(role)
         if model:
             argv += ["--model", model]
-        result = await self.process(argv, cwd, role)
-        if result["returncode"]:
-            raise Blocked(f"{role} exited {result['returncode']}: {result['stderr'][-2000:]}; call={result['call']}")
-        return parse_result(result["stdout"], nonce) if structured else result["stdout"]
+        # A single transient failure (nonzero exit, malformed envelope, upstream
+        # 5xx) must not kill the whole run — retry before declaring Blocked.
+        last_error = "unknown failure"
+        for attempt in range(3):
+            result = await self.process(argv, cwd, role)
+            if result["returncode"] == 0:
+                if not structured:
+                    return result["stdout"]
+                try:
+                    return parse_result(result["stdout"], nonce)
+                except Blocked as exc:
+                    last_error = f"unusable structured output: {exc}"
+            else:
+                last_error = (f"{role} exited {result['returncode']}: "
+                              f"{result['stderr'][-2000:]}; call={result['call']}")
+            if attempt < 2:
+                await asyncio.sleep(5)
+        raise Blocked(f"{role} failed after 3 attempts. Last: {last_error}")

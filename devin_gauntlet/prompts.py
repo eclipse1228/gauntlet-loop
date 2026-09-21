@@ -76,6 +76,11 @@ against the bar. Return:
 Give observations for every listed file. Do not modify anything or invoke other
 agents. The scheduler validates the packet ID, file observations, frozen bytes,
 and independent check exit codes; your use of the word PASS alone cannot end it.
+
+ENVIRONMENT NOTE: shell/exec/edit/write tools are unavailable to you — calls to
+them are rejected in this non-interactive mode. Inspect files ONLY with the
+read/grep/glob/image-reading tools. Always end by returning the required
+<GAUNTLET_RESULT:...> envelope, even on UNJUDGEABLE.
 '''
 
 SMOOTHER = r'''You are a fresh optional smoothing agent. Inspect the complete current
