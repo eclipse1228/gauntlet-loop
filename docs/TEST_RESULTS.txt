@@ -1,0 +1,97 @@
+DEVIN GAUNTLET RUNNER v0.1.0 — LOCAL TEST RECORD
+Date: 2026-09-19
+Environment: Linux, Python 3.13.5, local Git.
+
+37 distinct automated tests PASSED in separately executed batches.
+Two focused smoke tests were rerun after final checkpoint/evidence hardening.
+Model roles used examples/fake_devin.py, an OFFLINE TEST DOUBLE.
+NO authenticated Devin model call was performed.
+The tests exercise real Python scheduling, Git operations, subprocess execution,
+process-group cancellation, state checkpoints and artifact/response validation.
+They DO NOT establish real model quality, vision ability, or Devin permission enforcement.
+
+gauntlet-tests-unit.txt
+test_ab_tie_is_not_a_win (test_runner.ProtocolTests.test_ab_tie_is_not_a_win) ... ok
+test_bare_pass_rejected (test_runner.ProtocolTests.test_bare_pass_rejected) ... ok
+test_cycle_rejected (test_runner.ProtocolTests.test_cycle_rejected) ... ok
+test_duplicate_envelope_rejected (test_runner.ProtocolTests.test_duplicate_envelope_rejected) ... ok
+test_duplicate_task_rejected (test_runner.ProtocolTests.test_duplicate_task_rejected) ... ok
+test_empty_evidence_rejected (test_runner.ProtocolTests.test_empty_evidence_rejected) ... ok
+test_evidence_symlink_rejected (test_runner.ProtocolTests.test_evidence_symlink_rejected) ... ok
+test_invented_artifact_rejected (test_runner.ProtocolTests.test_invented_artifact_rejected) ... ok
+test_malformed_json_rejected (test_runner.ProtocolTests.test_malformed_json_rejected) ... ok
+test_measurement_needs_executable_check (test_runner.ProtocolTests.test_measurement_needs_executable_check) ... ok
+test_missing_observation_rejected (test_runner.ProtocolTests.test_missing_observation_rejected) ... ok
+test_nonzero_check_overrides_critic_pass (test_runner.ProtocolTests.test_nonzero_check_overrides_critic_pass) ... ok
+test_paths_cannot_traverse_or_use_history (test_runner.ProtocolTests.test_paths_cannot_traverse_or_use_history) ... ok
+test_reference_pairs_required (test_runner.ProtocolTests.test_reference_pairs_required) ... ok
+test_shell_string_is_not_argv (test_runner.ProtocolTests.test_shell_string_is_not_argv) ... ok
+test_stale_envelope_rejected (test_runner.ProtocolTests.test_stale_envelope_rejected) ... ok
+test_unjudgeable_blocks_instead_of_passing (test_runner.ProtocolTests.test_unjudgeable_blocks_instead_of_passing) ... ok
+test_unknown_dependency_rejected (test_runner.ProtocolTests.test_unknown_dependency_rejected) ... ok
+test_valid_envelope (test_runner.ProtocolTests.test_valid_envelope) ... ok
+test_wrong_packet_id_rejected (test_runner.ProtocolTests.test_wrong_packet_id_rejected) ... ok
+
+----------------------------------------------------------------------
+Ran 20 tests in 0.002s
+
+OK
+
+
+gauntlet-tests-batch1a.txt
+test_seven_rounds_builder_stop_text_ignored_and_source_untouched (test_runner.EndToEndTests.test_seven_rounds_builder_stop_text_ignored_and_source_untouched) ... ok
+test_critic_payload_has_no_builder_history_or_ab_map (test_runner.EndToEndTests.test_critic_payload_has_no_builder_history_or_ab_map) ... ok
+test_dependency_runs_after_upstream_integration (test_runner.EndToEndTests.test_dependency_runs_after_upstream_integration) ... ok
+test_duplicate_runner_lock (test_runner.EndToEndTests.test_duplicate_runner_lock) ... ok
+
+----------------------------------------------------------------------
+Ran 4 tests in 25.196s
+
+OK
+
+
+gauntlet-tests-batch1b.txt
+test_execution_requires_explicit_authorization (test_runner.EndToEndTests.test_execution_requires_explicit_authorization) ... ok
+test_final_regression_reopens_failed_workstream (test_runner.EndToEndTests.test_final_regression_reopens_failed_workstream) ... ok
+test_fresh_source_capture_creates_real_artifact (test_runner.EndToEndTests.test_fresh_source_capture_creates_real_artifact) ... ok
+test_frozen_plan_tamper_is_blocked (test_runner.EndToEndTests.test_frozen_plan_tamper_is_blocked) ... ok
+
+----------------------------------------------------------------------
+Ran 4 tests in 19.281s
+
+OK
+
+
+gauntlet-tests-batch2.txt
+test_frozen_reference_tamper_is_blocked (test_runner.EndToEndTests.test_frozen_reference_tamper_is_blocked) ... ok
+test_goal_change_requires_new_run (test_runner.EndToEndTests.test_goal_change_requires_new_run) ... ok
+test_malformed_critic_blocks_and_resume_retries (test_runner.EndToEndTests.test_malformed_critic_blocks_and_resume_retries) ... ok
+test_measurement_uses_actual_runner_check_and_repeats (test_runner.EndToEndTests.test_measurement_uses_actual_runner_check_and_repeats) ... ok
+
+----------------------------------------------------------------------
+Ran 4 tests in 17.356s
+
+OK
+
+
+gauntlet-tests-batch3.txt
+test_optional_smoother_is_write_role_and_followed_by_rechecks (test_runner.EndToEndTests.test_optional_smoother_is_write_role_and_followed_by_rechecks) ... ok
+test_parallel_workstreams_and_integration_recheck (test_runner.EndToEndTests.test_parallel_workstreams_and_integration_recheck) ... ok
+test_resume_flags_disallowed_in_backend (test_runner.EndToEndTests.test_resume_flags_disallowed_in_backend) ... ok
+test_stop_terminates_managed_process_group_and_resume (test_runner.EndToEndTests.test_stop_terminates_managed_process_group_and_resume) ... ok
+test_wall_limit_is_not_success (test_runner.EndToEndTests.test_wall_limit_is_not_success) ... ok
+
+----------------------------------------------------------------------
+Ran 5 tests in 20.260s
+
+OK
+
+
+FINAL SMOKE RECHECK
+test_duplicate_runner_lock (test_runner.EndToEndTests.test_duplicate_runner_lock) ... ok
+test_fresh_source_capture_creates_real_artifact (test_runner.EndToEndTests.test_fresh_source_capture_creates_real_artifact) ... ok
+
+----------------------------------------------------------------------
+Ran 2 tests in 9.180s
+
+OK

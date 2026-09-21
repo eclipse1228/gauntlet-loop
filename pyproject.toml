@@ -1,0 +1,16 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "devin-gauntlet-runner"
+version = "0.1.0"
+description = "External durable workstream builder/fresh-critic loops using Devin CLI"
+requires-python = ">=3.11"
+dependencies = []
+
+[project.scripts]
+devin-gauntlet = "devin_gauntlet.__main__:main"
+
+[tool.setuptools.packages.find]
+include = ["devin_gauntlet*"]
