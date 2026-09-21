@@ -114,7 +114,7 @@ class Runtime:
                      f"Read({Path.home() / '.config/devin'}/**)",
                      f"Read({Path.home() / '.local/share/devin'}/**)"]
         else:
-            allow += [f"Write({cwd}/**)"]
+            allow += [f"Write({cwd}/**)", "Exec(**)"]
             deny += [f"Write({cwd / '.git'}/**)", f"Write({cwd / '.gauntlet-runtime'}/**)",
                      f"Write({self.root / 'references'}/**)"]
         return {
